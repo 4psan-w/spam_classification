@@ -11,6 +11,7 @@ from regex import sub
 
 download('punkt')
 download('stopwords')
+download('punkt_tab')
 # db_username = st.secrets['DB_USER']
 # db_password = st.secrets['DB_PASSWORD']
 
