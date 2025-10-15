@@ -1,5 +1,5 @@
-Streamlit 
+streamlit
 joblib
 nltk
-mysql 
-regex 
+regex
+mysql-connector-python
