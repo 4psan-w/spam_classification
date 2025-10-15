@@ -1,0 +1,5 @@
+Streamlit 
+joblib
+nltk
+mysql 
+regex 
