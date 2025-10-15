@@ -1,5 +1,7 @@
 import streamlit as st
 import joblib
+
+from nltk import download
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -7,7 +9,8 @@ from nltk.tokenize import word_tokenize
 from regex import sub
 # from mysql.connector import connect
 
-
+download('punkt')
+download('stopwords')
 # db_username = st.secrets['DB_USER']
 # db_password = st.secrets['DB_PASSWORD']
 
