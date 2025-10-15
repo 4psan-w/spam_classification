@@ -5,8 +5,11 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import word_tokenize
 from regex import sub
-from mysql.connector import connect
+# from mysql.connector import connect
 
+
+# db_username = st.secrets['DB_USER']
+# db_password = st.secrets['DB_PASSWORD']
 
 ps_stemmer = PorterStemmer()
 
@@ -30,36 +33,39 @@ class SpamClassifier:
             #-> Feedbacks and corrections 
         
 
-    def sql_connection(self):
-        usr_passwd = 'FUCKOFF69'
-        connection = connect(
-            host = 'localhost' ,
-            user = 'root',
-            password = usr_passwd,
-            database ='Project',
-            port = 3306 
-        )
+    # def sql_connection(self):
+    #     usr_passwd = 'FUCKOFF69'
+    #     connection = connect(
+    #         host = 'localhost' ,
+    #         user = db_username,
+    #         password = db_password,
+    #         database ='Project',
+    #         port = 3306 
+    #     )
 
         # Returns the Connection info and the Cursor to execute the Queries
-        return connection , connection.cursor()
+        # return connection , connection.cursor()
 
+
+
+# UPDATE IT LATER 
 
 
     #Controlling the Actual SQL query
-    def Correction(self,text):
-        conn , cursor = self.sql_connection()
-        # corrected = st.radio("Are you Satisfied With the Output ?\if Not What should it be? " ,['Spam' , "Not Spam"])
-        # QUERY
-        label = st.radio("What Was the Message Supposed to be", ["spam", "not spam"])
-        if st.button("Correct"):
-            pass
+    # def Correction(self,text):
+    #     conn , cursor = self.sql_connection()
+    #     # corrected = st.radio("Are you Satisfied With the Output ?\if Not What should it be? " ,['Spam' , "Not Spam"])
+    #     # QUERY
+    #     label = st.radio("What Was the Message Supposed to be", ["spam", "not spam"])
+    #     if st.button("Correct"):
+    #         pass
     
-        corrected = 1 if label == 'spam' else  0
-        cursor.execute(f'insert into Correction(text , Model_Predicted , User_correction) values(%s,%s,%s)'
-                       ,(text ,self.spam ,corrected))
-        # Commiting the Info.
-        conn.commit()
-        # conn.close()
+    #     corrected = 1 if label == 'spam' else  0
+    #     cursor.execute(f'insert into Correction(text , Model_Predicted , User_correction) values(%s,%s,%s)'
+    #                    ,(text ,self.spam ,corrected))
+    #     # Commiting the Info.
+    #     conn.commit()
+    #     # conn.close()
 
     
     #method for a mild introduction
@@ -106,8 +112,9 @@ class SpamClassifier:
                 st.error("Message Cannot Be empty") 
             # st.write(self.Clean_texts(user_input))
         
-        if st.button('Not Satisfied with the Result ? '):
-            self.Correction(user_input)
+    # FEEDBACK
+        # if st.button('Not Satisfied with the Result ? '):
+        #     self.Correction(user_input)
 
 
 if __name__ == "__main__":
