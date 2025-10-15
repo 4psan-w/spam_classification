@@ -2,4 +2,5 @@ streamlit
 joblib
 nltk
 regex
+scikit-learn
 mysql-connector-python
