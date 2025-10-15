@@ -15,11 +15,11 @@ class SpamClassifier:
     #Initialisation of the Model 
 
     # PreTrained Model and The TFIDF vectoriser
-
+    spam = 0
     def __init__(self):
         self.model = joblib.load("spam_model.pkl")
         self.vectorizer = joblib.load("vectoriser.pkl")
-        
+
         # also initialised the Stopwords cause we need it
         self.stop_words = set(stopwords.words('english'))
 
@@ -44,14 +44,19 @@ class SpamClassifier:
         return connection , connection.cursor()
 
 
+
     #Controlling the Actual SQL query
-    def Correction(self,text,spam,corrected):
+    def Correction(self,text):
         conn , cursor = self.sql_connection()
         # corrected = st.radio("Are you Satisfied With the Output ?\if Not What should it be? " ,['Spam' , "Not Spam"])
         # QUERY
-        corrected = 1 if corrected == 'Spam' else 0
+        label = st.radio("What Was the Message Supposed to be", ["spam", "not spam"])
+        if st.button("Correct"):
+            pass
+    
+        corrected = 1 if label == 'spam' else  0
         cursor.execute(f'insert into Correction(text , Model_Predicted , User_correction) values(%s,%s,%s)'
-                       ,(text ,spam ,corrected))
+                       ,(text ,self.spam ,corrected))
         # Commiting the Info.
         conn.commit()
         # conn.close()
@@ -88,11 +93,12 @@ class SpamClassifier:
     def main(self):
         self.introduction()
         user_input = st.text_area("Enter your message here:")
-        if st.button("Submit"):
+        # spam : int
+        if st.button("Submit" ,key='message_submit'):
             if(user_input):
-                spam=self.isspam(user_input)
-                spam=spam[0]    
-                if spam:
+                self.spam=self.isspam(user_input)
+                self.spam=self.spam[0]    
+                if self.spam:
                     st.error("Its Concluded as a Spam Mesage")
                 else:
                     st.success("Its Concluded as a Not a Spam Message")
@@ -100,7 +106,8 @@ class SpamClassifier:
                 st.error("Message Cannot Be empty") 
             # st.write(self.Clean_texts(user_input))
         
-        self.Correction(user_input,spam)
+        if st.button('Not Satisfied with the Result ? '):
+            self.Correction(user_input)
 
 
 if __name__ == "__main__":
